@@ -3,10 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from config import Config
 
-from rental_app.managers.routes import managers_bp
-from rental_app.clients.routes import clients_bp
-from rental_app.drivers.routes import drivers_bp
-from rental_app.home.routes import home_bp
+
 
 
 db = SQLAlchemy()
@@ -23,6 +20,11 @@ def create_app(config_class=Config) -> Flask:
     
     db.init_app(rental_app)
     migrate.init_app(rental_app, db)
+    
+    from rental_app.managers.routes import managers_bp
+    from rental_app.clients.routes import clients_bp
+    from rental_app.drivers.routes import drivers_bp
+    from rental_app.home.routes import home_bp
     
     # Register blueprints
     rental_app.register_blueprint(managers_bp, url_prefix='/manager')

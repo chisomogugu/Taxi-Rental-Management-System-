@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <!-- Back to Dashboard -->
+  <a href="{{ url_for('managers.dashboard') }}" class="btn btn-link mb-3">
+    &larr; Back to Dashboard
+  </a>
+
+  <h2>Add Car</h2>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+      {{ form.license_plate.label(class="form-label") }}
+      {{ form.license_plate(class="form-control") }}
+    </div>
+    <div class="mb-3">
+      {{ form.model_id.label(class="form-label") }}
+      {{ form.model_id(class="form-control") }}
+    </div>
+    {{ form.submit(class="btn btn-primary") }}
+  </form>
+{% endblock %}

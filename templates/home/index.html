@@ -1,0 +1,14 @@
+{# templates/home/index.html #}
+{% extends 'base.html' %}
+
+{% block title %}Taxi Rental Home{% endblock %}
+
+{% block content %}
+  <div class="text-center mt-5">
+    <h1>Welcome to Taxi Rental</h1>
+    <p>Select your role to log in:</p>
+    <a class="btn btn-dark me-2" href="{{ url_for('managers.dashboard') }}">Manager</a>
+    <a class="btn btn-warning me-2" href="{{ url_for('drivers.dashboard') }}">Driver</a>
+    <a class="btn btn-info"       href="{{ url_for('clients.dashboard') }}">Client</a>
+  </div>
+{% endblock %}

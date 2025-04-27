@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Client Dashboard{% endblock %}
+
+{% block content %}
+  <a href="{{ url_for('home.index') }}">&larr; Back to Home</a>
+  <h1 class="mt-4">Welcome Client!</h1>
+
+  <p class="lead">Book a ride, view your past trips, and manage your account here.</p>
+  <!-- stub content -->
+  <div class="alert alert-secondary">
+    Client‐side booking form & history coming soon…
+  </div>
+{% endblock %}

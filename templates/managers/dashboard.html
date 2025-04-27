@@ -1,0 +1,33 @@
+{# templates/managers/dashboard.html #}
+{% extends 'base.html' %}
+
+{% block content %}
+  <a href="{{ url_for('home.index') }}">&larr; Back</a>
+
+  <nav class="my-4 border-bottom pb-2">
+    <a href="{{ url_for('managers.top_k_clients') }}"     class="me-4">Top K Clients</a>
+    <a href="{{ url_for('managers.model_usage_stats') }}" class="me-4">Model Usage Stats</a>
+    <a href="{{ url_for('managers.driver_performance') }}" class="me-4">Driver Performance</a>
+    <a href="{{ url_for('managers.cross_city_clients') }}">Cross-City Clients</a>
+  </nav>
+
+  <h1>Welcome Manager!</h1>
+
+  <div class="mt-4">
+    <form action="{{ url_for('managers.add_car') }}"    method="get" class="d-inline me-2">
+      <button type="submit" class="btn btn-primary">Add Car</button>
+    </form>
+
+    <form action="{{ url_for('managers.remove_car') }}" method="get" class="d-inline me-2">
+      <button type="submit" class="btn btn-danger">Remove Car</button>
+    </form>
+
+    <form action="{{ url_for('managers.add_model') }}"  method="get" class="d-inline me-2">
+      <button type="submit" class="btn btn-primary">Add Model</button>
+    </form>
+
+    <form action="{{ url_for('managers.remove_model') }}" method="get" class="d-inline">
+      <button type="submit" class="btn btn-danger">Remove Model</button>
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Driver Dashboard{% endblock %}
+
+{% block content %}
+  <a href="{{ url_for('home.index') }}">&larr; Back to Home</a>
+  <h1 class="mt-4">Welcome Driver!</h1>
+
+  <p class="lead">Here you’ll be able to see your current assignments, earnings, and availability controls.</p>
+  <!-- stub content -->
+  <div class="alert alert-secondary">
+    Driver‐specific widgets coming soon…
+  </div>
+{% endblock %}

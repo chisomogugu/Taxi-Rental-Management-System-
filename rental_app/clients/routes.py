@@ -1,10 +1,9 @@
-#Contains view functions that handle HTTP requests and define URL endpoints
+from flask import Blueprint, render_template
 
-from flask import render_template, redirect, url_for, flash, request, Blueprint
-from rental_app import db
-# from rental_app.clients import clients_bp
-# from rental_app.models import Manager, Car, Driver # Example of how to import models
-# from rental_app.clients.forms import AddCarForm, AssignDriverForm   Example of how to import forms
+clients_bp = Blueprint('clients', __name__)
 
-clients_bp = Blueprint('clients', __name__, template_folder='templates')
+@clients_bp.route('/dashboard')
+def dashboard():
+    return render_template('clients/dashboard.html')
 
+# add more client-specific endpoints here as needed

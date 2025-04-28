@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}MMC Rental - Home{% endblock %}
+
+{% block nav_items %}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('home.homepage') }}">Home</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('home.about') }}">About</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('home.contact') }}">Contact</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('home.terms') }}">Terms of Service</a>
+</li>
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/homepage.css') }}">
+
+<div class="homepage-wrapper">
+    <h1 class="homepage-title">Welcome to MMC Rental</h1>
+    <h2 class="homepage-subtitle">Look Forward to a Better Commute</h2>
+
+    <div class="home-container">
+        <!-- Manager Panel -->
+        <div class="glass-card">
+            <h3>Manager</h3>
+            <a href="{{ url_for('managers.login') }}" class="btn btn-mmc btn-lg">Login</a>
+            <a href="{{ url_for('managers.register') }}" class="btn btn-mmc btn-lg">Sign Up</a>
+        </div>
+
+        <!-- Client Panel -->
+        <div class="glass-card">
+            <h3>Client</h3>
+            <a href="{{ url_for('clients.login') }}" class="btn btn-mmc btn-lg">Login</a>
+            <a href="{{ url_for('clients.register') }}" class="btn btn-mmc btn-lg">Sign Up</a>
+        </div>
+
+        <!-- Driver Panel -->
+        <div class="glass-card">
+            <h3>Driver</h3>
+            <a href="{{ url_for('drivers.login') }}" class="btn btn-mmc btn-lg">Login</a>
+            <a href="{{ url_for('drivers.register') }}" class="btn btn-mmc btn-lg">Sign Up</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

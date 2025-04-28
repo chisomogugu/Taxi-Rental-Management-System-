@@ -1,12 +1,28 @@
 """
-Contains view functions that handle HTTP requests and define URL endpoints
+Contains view functions that handle HTTP requests and define URL endpoints for the homepage
 """
+from flask import render_template, Blueprint
 
-from flask import render_template, redirect, url_for, flash, request, Blueprint
-from rental_app import db
-# from rental_app.models import Manager, Car, Driver # Example of how to import models
-# from rental_app.home.forms import AddCarForm, AssignDriverForm   Example of how to import forms
-
+# homepage blueprint
 home_bp = Blueprint('home', __name__, template_folder='templates')
 
 
+# homepage route
+@home_bp.route('/')
+def homepage():
+    return render_template('home.html')
+
+# about page route
+@home_bp.route('/about')
+def about():
+    return "render_template('about.html')"
+
+# contact page route
+@home_bp.route('/contact')
+def contact():
+    return "render_template('contact.html')"
+
+# terms page route
+@home_bp.route('/terms')
+def terms():
+    return "render_template('terms.html')"

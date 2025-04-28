@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}MMC Rental - Client Register{% endblock %}
+
+{% block nav_items %}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('home.homepage') }}">Home</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('home.about') }}">About</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('home.contact') }}">Contact</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('home.terms') }}">Terms of Service</a>
+</li>
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card p-4 shadow" style="background: rgba(52, 58, 64, 0.8); width: 100%; max-width: 500px;">
+        <h2 class="text-center text-white mb-4">Client Registration</h2>
+        <form method="POST" style="max-height: 70vh; overflow-y: auto;">
+            {{ form.hidden_tag() }}
+
+            <div class="mb-3">
+                {{ form.name.label(class="form-label text-white text-start") }}
+                {{ form.name(class="form-control") }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.emailaddress.label(class="form-label text-white text-start") }}
+                {{ form.emailaddress(class="form-control") }}
+            </div>
+
+            <hr class="text-white">
+
+            <h5 class="text-white mb-3">Personal Address</h5>
+            <div class="mb-3">
+                {{ form.road.label(class="form-label text-white text-start") }}
+                {{ form.road(class="form-control") }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.number.label(class="form-label text-white text-start") }}
+                {{ form.number(class="form-control") }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.city.label(class="form-label text-white text-start") }}
+                {{ form.city(class="form-control") }}
+            </div>
+
+            <hr class="text-white">
+
+            <h5 class="text-white mb-3">Credit Card Info</h5>
+            <div class="mb-3">
+                {{ form.cardnumber.label(class="form-label text-white text-start") }}
+                {{ form.cardnumber(class="form-control") }}
+            </div>
+            
+            <hr class="text-white">
+
+            <h5 class="text-white mb-3">Payment Address</h5>
+            <div class="mb-3">
+                {{ form.card_road.label(class="form-label text-white text-start") }}
+                {{ form.card_road(class="form-control") }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.card_number.label(class="form-label text-white text-start") }}
+                {{ form.card_number(class="form-control") }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.card_city.label(class="form-label text-white text-start") }}
+                {{ form.card_city(class="form-control") }}
+            </div>
+
+            <div class="d-grid mt-4">
+                {{ form.submit(class="btn btn-mmc btn-lg") }}
+            </div>
+        </form>
+
+        <div class="text-center mt-3">
+            <a href="{{ url_for('clients.login') }}" class="text-white">Already have an account? Login</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

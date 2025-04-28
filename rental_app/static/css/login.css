@@ -1,0 +1,56 @@
+body {
+    background: url("../img/l3.jpeg") no-repeat center center fixed;
+    background-size: cover;
+    background-position: center;
+    backdrop-filter: blur(5px);
+    height: 100vh;
+}
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.login-box {
+    background: rgba(52, 58, 64, 0.8);
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.4);
+    backdrop-filter: blur(6px);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-box h2 {
+    margin-bottom: 30px;
+    font-weight: bold;
+    color: white;
+}
+
+.form-control {
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.btn-mmc {
+    background-color: #ffc107;
+    color: black;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+}
+
+.btn-mmc:hover {
+    background-color: #e0a800;
+    color: white;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

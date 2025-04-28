@@ -1,22 +1,27 @@
+# rental_app/__init__.py
 import os
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from config import Config
+
+db = SQLAlchemy()
 
 def create_app():
-    # compute absolute path to your project-root/templates folder
-    template_dir = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), '..', 'templates')
-    )
+    here = os.path.dirname(__file__)
+    template_dir = os.path.abspath(os.path.join(here, '..', 'templates'))
+    static_dir   = os.path.abspath(os.path.join(here, '..', 'static'))
 
     app = Flask(
         __name__,
-        template_folder=template_dir,  # point Flask at ../templates
-        static_folder=os.path.abspath(
-            os.path.join(os.path.dirname(__file__), '..', 'static')
-        ),  # if you ever add a top-level static/
+        template_folder=template_dir,
+        static_folder=static_dir,
     )
 
-    # import and register each blueprint
-    from .home.routes    import home_bp
+    app.config.from_object(Config)
+
+    db.init_app(app)
+
+    from .home.routes     import home_bp
     from .managers.routes import managers_bp
     from .drivers.routes  import drivers_bp
     from .clients.routes  import clients_bp

@@ -172,3 +172,28 @@ class DriverModel(db.Model):
     
     def __repr__(self):
         return f'<DriverModel {self.drivername} - Model {self.modelid}>'
+    
+# ────────────────────────────────────────────────────────────────────────
+# new imports for the helper
+from sqlalchemy import func, desc
+# ────────────────────────────────────────────────────────────────────────
+
+def get_top_k_clients(k: int):
+    """
+    Returns a list of (email, name, rental_count) for the top‐k clients
+    ordered by their total number of rents, descending.
+    """
+    # join Client ⇆ Rent, count rents per client, order descending, limit K
+    q = (
+        db.session
+          .query(
+              Client.emailaddress.label('email'),
+              Client.name.label('name'),
+              func.count(Rent.rentid).label('rental_count')
+          )
+          .join(Rent, Rent.clientemail == Client.emailaddress)
+          .group_by(Client.emailaddress, Client.name)
+          .order_by(desc('rental_count'))
+          .limit(k)
+    )
+    return q.all()

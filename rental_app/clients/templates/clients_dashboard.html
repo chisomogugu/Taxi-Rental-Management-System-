@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %}Client Dashboard{% endblock %}
+
+{% block nav_items %}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('home.homepage') }}">Home</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('clients.dashboard') }}">Dashboard</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('clients.rentals') }}">My Rent</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('clients.manage_creditcard') }}">Manage Credit Card</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('home.contact') }}">Contact</a>
+</li>
+{% endblock %}
+
+{% block nav_profile %}
+<div class="dropdown">
+    <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile" width="30" height="30" class="rounded-circle">
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="{{ url_for('home.homepage') }}">Logout</a></li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/client_dashboard.css') }}">
+
+<div class="main">
+    <!-- FIXME -->
+    <div class="welcome">Welcome, Client!</div>
+
+
+    <!-- FIXME -->
+    <div class="car-grid">
+        <!-- Car 1 -->
+      <div class="car-card">
+        <img src="https://images.pexels.com/photos/27639321/pexels-photo-27639321/free-photo-of-the-left-front-view-of-the-kia-k5-stopped-in-front-of-a-green-glass-building.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
+        <button class="book-btn" data-brand="Kia">Book</button>
+    </div>
+    <!-- Car 2 -->
+    <div class="car-card">
+        <img src="https://images.pexels.com/photos/2036544/pexels-photo-2036544.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Car 2">
+        <button class="book-btn" data-brand="Toyota">Book</button>
+    </div>
+    <!-- Car 3 -->
+    <div class="car-card">
+        <img src="https://images.pexels.com/photos/892522/pexels-photo-892522.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Car 3">
+        <button class="book-btn" data-brand="BMW">Book</button>
+    </div>
+    <!-- Car 4 -->
+    <div class="car-card">
+        <img src="https://images.pexels.com/photos/1719647/pexels-photo-1719647.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Car 4">
+        <button class="book-btn" data-brand="Audi">Book</button>
+    </div>
+    <!-- Car 5 -->
+    <div class="car-card">
+        <img src="https://images.pexels.com/photos/13101566/pexels-photo-13101566.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Car 5">
+        <button class="book-btn" data-brand="Mercedes">Book</button>
+    </div>
+    <!-- Car 6 -->
+    <div class="car-card">
+        <img src="https://images.pexels.com/photos/30306584/pexels-photo-30306584/free-photo-of-white-electric-car-on-abu-dhabi-highway.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
+        <button class="book-btn" data-brand="Tesla">Book</button>
+    </div>
+    <!-- Car 7 -->
+    <div class="car-card">
+        <img src="https://images.pexels.com/photos/116675/pexels-photo-116675.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
+        <button class="book-btn" data-brand="Range Rover">Book</button>
+    </div>
+    <!-- Car 8 -->
+    <div class="car-card">
+        <img src="https://images.pexels.com/photos/119435/pexels-photo-119435.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Car 8">
+        <button class="book-btn" data-brand="Jeep">Book</button>
+    </div>
+    <!-- Car 9 -->
+    <div class="car-card">
+        <img src="https://images.pexels.com/photos/5471133/pexels-photo-5471133.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Car 9">
+        <button class="book-btn" data-brand="Volkswagen">Book</button>
+    </div>
+    </div>
+
+    <!-- Car Inventory Modal -->
+    <div class="modal fade" id="inventoryModal" tabindex="-1" aria-labelledby="inventoryModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="inventoryModalLabel">Car Models</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <ul id="inventory-list" class="list-group">
+              <!-- dynamic content goes here -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.book-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const brand = this.dataset.brand;
+      fetch(`/inventory/${brand}`)
+        .then(response => response.json())
+        .then(data => {
+          const inventoryList = document.getElementById('inventory-list');
+          inventoryList.innerHTML = '';
+          data.models.forEach(model => {
+            const li = document.createElement('li');
+            li.className = 'list-group-item';
+            li.innerText = model;
+            inventoryList.appendChild(li);
+          });
+          new bootstrap.Modal(document.getElementById('inventoryModal')).show();
+        });
+    });
+  });
+</script>
+
+{% endblock %}

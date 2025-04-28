@@ -1,14 +1,9 @@
-from flask import render_template, redirect, url_for, flash, request, Blueprint
-#Contains view functions that handle HTTP requests and define URL endpoints
-
-from flask import render_template, jsonify, redirect, url_for, flash, request, Blueprint
+from flask import render_template, redirect, jsonify, url_for, flash, request, Blueprint
 from rental_app import db
 from rental_app.model import Client, Address, CreditCard, ClientAddress
 from rental_app.clients.forms import ClientRegistrationForm, ClientLoginForm
 
-# from rental_app.clients import clients_bp
-# from rental_app.models import Manager, Car, Driver # Example of how to import models
-# from rental_app.clients.forms import AddCarForm, AssignDriverForm   Example of how to import forms
+#Contains view functions that handle HTTP requests and define URL endpoints
 clients_bp = Blueprint('clients', __name__, template_folder='templates')
 
 @clients_bp.route('/login', methods=['GET', 'POST'])
@@ -18,7 +13,7 @@ def login():
         client = Client.query.filter_by(emailaddress=form.emailaddress.data).first()
         if client:
             flash('Login successful!', 'success')
-            return redirect(url_for('home.homepage'))  # Or wherever you want to send them
+            return redirect(url_for('clients.dashboard'))
         else:
             flash('Login failed. Email not found.', 'danger')
             return redirect(url_for('clients.login'))
@@ -104,22 +99,8 @@ def register():
 
 @clients_bp.route('/dashboard', methods = ['GET'])
 def dashboard():
-    return render_template('index.html')
+    return render_template('clients_dashboard.html')
 
-# Fetch cars by brands from the database sql
-# @clients_bp.route('/inventory/<brand>')
-# def inventory(brand):
-#     conn = sqlite3.connect('your_database.db')
-#     cursor = conn.cursor()
-#     cursor.execute("""
-#         SELECT Model.modelid
-#         FROM Model
-#         JOIN Car ON Model.modelid = Car.carid
-#         WHERE Car.brand = ?
-#     """, (brand,))
-#     models = [row[0] for row in cursor.fetchall()]
-#     conn.close()
-#     return jsonify(models=models)
 
 #Temporary testing data
 @clients_bp.route('/inventory/<brand>')
@@ -149,3 +130,15 @@ def inventory(brand):
         models = ['No inventory found']
 
     return jsonify(models=models)
+
+@clients_bp.route('/rentals', methods=['GET'])
+def rentals():
+    return "render_template('clients_rental.html')"
+
+@clients_bp.route('/manage_creditcard', methods=['GET'])
+def manage_creditcard():
+    return "render_template('clients_manage_creditcard.html')"
+
+@clients_bp.route('/manage_address', methods=['GET'])
+def manage_address():
+    return "render_template('clients_manage_address.html')"

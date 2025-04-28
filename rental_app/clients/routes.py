@@ -23,6 +23,12 @@ def register():
     form = ClientRegistrationForm()
     if form.validate_on_submit():
         try:
+            # Check if email already exists
+            existing_client = Client.query.filter_by(emailaddress=form.emailaddress.data).first()
+            if existing_client:
+                flash('Email already registered. Please log in.', 'danger')
+                return redirect(url_for('clients.login'))
+            
             # Insert client
             new_client = Client(
                 name=form.name.data,

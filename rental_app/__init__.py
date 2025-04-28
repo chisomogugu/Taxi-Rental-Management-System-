@@ -30,7 +30,7 @@ def create_app(config_class=Config) -> Flask:
     rental_app.register_blueprint(managers_bp, url_prefix='/manager')
     rental_app.register_blueprint(clients_bp, url_prefix='/client')
     rental_app.register_blueprint(drivers_bp, url_prefix='/driver')
-    rental_app.register_blueprint(home_bp, url_prefix='/home')
+    rental_app.register_blueprint(home_bp)
 
     
     return rental_app

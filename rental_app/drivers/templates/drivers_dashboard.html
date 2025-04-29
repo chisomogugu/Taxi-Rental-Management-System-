@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block title %}Driver Dashboard{% endblock %}
+
+{% block nav_items %}
+
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('drivers.rentals') }}">My Rentals</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('drivers.view_drivers_models') }}">My Models</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('drivers.update_address') }}">Update Address</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('drivers.dashboard') }}">Dashboard</a>
+</li>
+{% endblock %}
+
+{% block nav_profile %}
+<div class="dropdown">
+    <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile" width="30" height="30" class="rounded-circle">
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="{{ url_for('home.homepage') }}">Logout</a></li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/driver_dashboard.css') }}">
+
+<section class="dashboard-welcome text-center mt-5">
+    <h1 class="welcome-title">Welcome, {{ driver.name }}!</h1>
+    <p class="driver-address">📍 {{ driver.road }}, {{ driver.number }}, {{ driver.city }}</p>
+</section>
+
+<div class="section-box text-center mt-5">
+    <h2 class="section-header">Where are we driving to today?</h2>
+</div>
+
+<!-- <section class="dashboard-welcome">
+    <h1>Welcome, {{ driver.name }}!</h1>
+    <p class="dashboard-subtitle">What cars are we driving today?</p>
+</section> -->
+
+<section class="car-gallery">
+    {% for car in cars %}
+    <div class="car-card">
+        <img src="{{ url_for('static', filename='img/cars/' + car.brand + '.png') }}" alt="{{ car.brand }} image">
+        <div class="car-info">
+            <h4>{{ car.brand }}</h4>
+            <button class="select-btn" data-brand="{{ car.brand }}">Drive</button>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+<!-- Car Model Modal -->
+<div class="modal fade" id="inventoryModal" tabindex="-1" aria-labelledby="inventoryModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-warning">
+        <h5 class="modal-title" id="inventoryModalLabel">Available Models</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Model ID</th>
+              <th>Year</th>
+              <th>Color</th>
+              <th>Transmission</th>
+            </tr>
+          </thead>
+          <tbody id="inventory-table-body">
+            <!-- Dynamic content from JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.select-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const brand = this.dataset.brand;
+        fetch(`/driver/carinventory/${brand}`)  // Note the /driver/ prefix
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById('inventory-table-body');
+                tableBody.innerHTML = '';
+                data.models.forEach(model => {
+                    const row = `
+                        <tr>
+                            <td>${model.modelid}</td>
+                            <td>${model.year}</td>
+                            <td>${model.color}</td>
+                            <td>${model.transmission}</td>
+                        </tr>`;
+                    tableBody.insertAdjacentHTML('beforeend', row);
+                });
+                new bootstrap.Modal(document.getElementById('inventoryModal')).show();
+            })
+            .catch(error => console.error('Error:', error));  // Add error handling
+    });
+});
+</script>
+{% endblock %}

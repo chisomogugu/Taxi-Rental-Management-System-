@@ -11,5 +11,10 @@ class DriverRegistrationForm(FlaskForm):
 
 class DriverLoginForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired(), Length(min=2, max=40)])
-    ssn = IntegerField('SSN', validators=[DataRequired()])
     submit = SubmitField('Login')
+
+class DriverUpdateAddressForm(FlaskForm):
+    road = StringField('Street Address', validators=[DataRequired(), Length(min=2, max=100)])
+    number = IntegerField('Zip Code', validators=[DataRequired()])
+    city = StringField('City', validators=[DataRequired(), Length(min=2, max=50)])
+    submit = SubmitField('Update')

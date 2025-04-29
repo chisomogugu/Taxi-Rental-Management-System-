@@ -1,0 +1,90 @@
+body {
+    background-color: #5c5c5c;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+}
+
+.dashboard-welcome {
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #333, #555);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.welcome-title {
+    font-size: 2.8rem;
+    font-weight: bold;
+    color: #ffd700; /* bright gold */
+    margin-bottom: 0.5rem;
+}
+
+.driver-address {
+    font-size: 1.2rem;
+    color: #e0e0e0;
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+.section-box {
+    background-color: #2e2e2e;
+    padding: 1.5rem 2rem;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    max-width: 600px;
+    margin: 0 auto 3rem auto;
+}
+
+.section-header {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+
+
+.car-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin: 40px;
+}
+
+.car-card {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.car-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.car-card:hover {
+    transform: translateY(-8px);
+}
+.car-info {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.select-btn {
+    background-color: #ffc107;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.select-btn:hover {
+    background-color: #e0a800;
+    color: white;
+}

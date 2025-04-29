@@ -1,6 +1,6 @@
-from flask import render_template, redirect, jsonify, url_for, flash, request, Blueprint
+from flask import render_template, redirect, jsonify, url_for, flash, session, request, Blueprint
 from rental_app import db
-from rental_app.model import Client, Address, CreditCard, ClientAddress
+from rental_app.model import Client, Address, CreditCard, ClientAddress, Car, Model, Rent
 from rental_app.clients.forms import ClientRegistrationForm, ClientLoginForm
 
 #Contains view functions that handle HTTP requests and define URL endpoints
@@ -12,6 +12,7 @@ def login():
     if form.validate_on_submit():
         client = Client.query.filter_by(emailaddress=form.emailaddress.data).first()
         if client:
+            session['client_email'] = client.emailaddress   # <-- Save client email in session
             flash('Login successful!', 'success')
             return redirect(url_for('clients.dashboard'))
         else:
@@ -97,39 +98,48 @@ def register():
     return render_template('clients_register.html', form=form)
 
 
-@clients_bp.route('/dashboard', methods = ['GET'])
+@clients_bp.route('/dashboard', methods=['GET'])
 def dashboard():
-    return render_template('clients_dashboard.html')
+    client_email = session.get('client_email')
+    if not client_email:
+        flash('You must log in first.', 'danger')
+        return redirect(url_for('clients.login'))
 
+    client = Client.query.filter_by(emailaddress=client_email).first()
+    client_name = client.name.capitalize() if client else "Client"
 
-#Temporary testing data
-@clients_bp.route('/inventory/<brand>')
-def inventory(brand):
-    # Temporary fake inventory data
-    models = []
+    return render_template('clients_dashboard.html', client_name=client_name)
 
-    if brand.lower() == 'kia':
-        models = ['K5', 'Sorento', 'Sportage']
-    elif brand.lower() == 'toyota':
-        models = ['Corolla', 'Camry', 'RAV4']
-    elif brand.lower() == 'bmw':
-        models = ['3 Series', 'X5', 'M4']
-    elif brand.lower() == 'audi':
-        models = ['A4', 'Q5', 'A6']
-    elif brand.lower() == 'maercedes': 
-        models = ['GLE', 'C-Class', 'E-Class']
-    elif brand.lower() == 'tesla':
-        models = ['Model 3', 'Model S', 'Model X']
-    elif brand.lower() == 'range rover':
-        models = ['Evoque', 'Velar', 'Sport']
-    elif brand.lower() == 'jeep':
-        models = ['Wrangler', 'Grand Cherokee', 'Compass']
-    elif brand.lower() == 'volkswagen':
-        models = ['Golf', 'Passat', 'Tiguan']
+@clients_bp.route('/book/<brand>', methods=['GET'])
+def book_models(brand):
+    models = db.session.query(Model).join(Car).filter(Car.brand.ilike(brand)).all()
+    data = [
+        {
+            'modelid': m.modelid,
+            'year': m.constructionyear,
+            'color': m.color,
+            'transmission': m.transmissiontype
+        }
+        for m in models
+    ]
+    return jsonify(models=data)
+
+@clients_bp.route('/check_availability/<int:modelid>')
+def check_availability(modelid):
+    selected_date = request.args.get('date')
+
+    # Query to check if car model already booked on that date
+    rent = db.session.query(Rent).filter(
+        Rent.modelid == modelid,
+        Rent.date == selected_date
+    ).first()
+
+    if rent:
+        return jsonify({'available': False})
     else:
-        models = ['No inventory found']
+        return jsonify({'available': True})
 
-    return jsonify(models=models)
+
 
 @clients_bp.route('/rentals', methods=['GET'])
 def rentals():

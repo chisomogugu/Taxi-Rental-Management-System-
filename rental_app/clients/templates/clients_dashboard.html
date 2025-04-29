@@ -35,8 +35,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/client_dashboard.css') }}">
 
 <div class="main">
-    <!-- FIXME -->
-    <div class="welcome">Welcome, Client!</div>
+    <div class="welcome">Welcome, {{ client_name }}!</div>
 
 
     <!-- FIXME -->
@@ -93,13 +92,27 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
+            <button id="back-button" style="display:none; background:none; border:none;">
+              <img src="https://cdn-icons-png.flaticon.com/512/545/545682.png" width="25" height="25">
+            </button>
             <h5 class="modal-title" id="inventoryModalLabel">Car Models</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <ul id="inventory-list" class="list-group">
-              <!-- dynamic content goes here -->
-            </ul>
+            <!-- Inventory List -->
+            <div id="inventory-list">
+              <!-- table dynamically inserted here -->
+            </div>
+          
+            <!-- Date Form -->
+            <div id="model-selection-form" style="display:none; margin-top:20px;">
+              <h5 id="selected-model-info"></h5>
+              <form id="dateForm">
+                <input type="date" id="rental-date" required class="form-control mb-2">
+                <button type="submit" class="btn btn-primary">Check Availability</button>
+              </form>
+            </div>
+          
           </div>
         </div>
       </div>
@@ -108,24 +121,136 @@
 </div>
 
 <script>
-  document.querySelectorAll('.book-btn').forEach(button => {
-    button.addEventListener('click', function() {
-      const brand = this.dataset.brand;
-      fetch(`/inventory/${brand}`)
+  document.addEventListener('DOMContentLoaded', function () {
+    let selectedModelId = null;
+    const inventoryModal = new bootstrap.Modal(document.getElementById('inventoryModal'));
+    const inventoryList = document.getElementById('inventory-list');
+    const modelSelectionForm = document.getElementById('model-selection-form');
+    const backButton = document.getElementById('back-button');
+    const selectedModelInfo = document.getElementById('selected-model-info');
+    const dateForm = document.getElementById('dateForm');
+  
+    document.querySelectorAll('.book-btn').forEach(button => {
+      button.addEventListener('click', function () {
+        const brand = this.dataset.brand;
+  
+        fetch(`/client/book/${brand}`)
+          .then(response => response.json())
+          .then(data => {
+            const models = data.models;
+  
+            let tableHTML = `
+              <style>
+                table, th, td {
+                  border: 1px solid #ccc;
+                  border-collapse: collapse;
+                }
+                th, td {
+                  padding: 10px;
+                  text-align: center;
+                }
+              </style>
+              <table style="width:100%;">
+                <thead>
+                  <tr>
+                    <th>Model ID</th>
+                    <th>Year</th>
+                    <th>Color</th>
+                    <th>Transmission</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>`;
+  
+            models.forEach(m => {
+              tableHTML += `
+                <tr>
+                  <td>${m.modelid}</td>
+                  <td>${m.year}</td>
+                  <td>${m.color}</td>
+                  <td>${m.transmission}</td>
+                  <td>
+                    <button class="btn btn-secondary select-model-btn" data-modelid="${m.modelid}">
+                      Select
+                    </button>
+                  </td>
+                </tr>`;
+            });
+  
+            tableHTML += '</tbody></table>';
+  
+            inventoryList.innerHTML = tableHTML;
+            modelSelectionForm.style.display = 'none';
+            inventoryList.style.display = 'block';
+            backButton.style.display = 'none';
+            inventoryModal.show();
+  
+            document.querySelectorAll('.select-model-btn').forEach(selectBtn => {
+              selectBtn.addEventListener('click', function () {
+                selectedModelId = this.dataset.modelid;
+                inventoryList.style.display = 'none';
+                modelSelectionForm.style.display = 'block';
+                backButton.style.display = 'inline-block';
+                selectedModelInfo.innerText = `Model ID: ${selectedModelId}`;
+              });
+            });
+          });
+      });
+    });
+  
+    backButton.addEventListener('click', function () {
+      modelSelectionForm.style.display = 'none';
+      inventoryList.style.display = 'block';
+      backButton.style.display = 'none';
+    });
+  
+    dateForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const selectedDate = document.getElementById('rental-date').value;
+      if (!selectedModelId) return;
+  
+      fetch(`/client/check_availability/${selectedModelId}?date=${selectedDate}`)
         .then(response => response.json())
         .then(data => {
-          const inventoryList = document.getElementById('inventory-list');
-          inventoryList.innerHTML = '';
-          data.models.forEach(model => {
-            const li = document.createElement('li');
-            li.className = 'list-group-item';
-            li.innerText = model;
-            inventoryList.appendChild(li);
-          });
-          new bootstrap.Modal(document.getElementById('inventoryModal')).show();
+          // After checking availability, show table with result
+          let tableHTML = `
+            <style>
+              table, th, td {
+                border: 1px solid #ccc;
+                border-collapse: collapse;
+              }
+              th, td {
+                padding: 10px;
+                text-align: center;
+              }
+            </style>
+            <table style="width:100%;">
+              <thead>
+                <tr>
+                  <th>Model ID</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>${selectedModelId}</td>
+                  <td>`;
+  
+          if (data.available) {
+            tableHTML += `<button class="btn btn-success" disabled>Book Now</button>`;
+          } else {
+            tableHTML += `<button class="btn btn-secondary" disabled>Not Available</button>`;
+          }
+  
+          tableHTML += `</td></tr></tbody></table>`;
+  
+          modelSelectionForm.style.display = 'none';
+          inventoryList.innerHTML = tableHTML;
+          inventoryList.style.display = 'block';
+          backButton.style.display = 'inline-block';
         });
     });
   });
-</script>
+  </script>  
 
 {% endblock %}

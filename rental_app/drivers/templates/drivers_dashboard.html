@@ -40,11 +40,6 @@
     <h2 class="section-header">Where are we driving to today?</h2>
 </div>
 
-<!-- <section class="dashboard-welcome">
-    <h1>Welcome, {{ driver.name }}!</h1>
-    <p class="dashboard-subtitle">What cars are we driving today?</p>
-</section> -->
-
 <section class="car-gallery">
     {% for car in cars %}
     <div class="car-card">
@@ -62,7 +57,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header bg-warning">
-        <h5 class="modal-title" id="inventoryModalLabel">Available Models</h5>
+        <h5 class="modal-title" id="inventoryModalLabel">Choose a Car Model to Drive</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
@@ -73,6 +68,7 @@
               <th>Year</th>
               <th>Color</th>
               <th>Transmission</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody id="inventory-table-body">
@@ -97,9 +93,16 @@ document.querySelectorAll('.select-btn').forEach(button => {
                     const row = `
                         <tr>
                             <td>${model.modelid}</td>
-                            <td>${model.year}</td>
+                            <td>${model.constructionyear}</td>
                             <td>${model.color}</td>
-                            <td>${model.transmission}</td>
+                            <td>${model.transmissiontype}</td>
+                            <td>
+                                <form method="POST" action="/driver/update_drivers_model" style="margin:0;">
+                                    <input type="hidden" name="modelid" value="${model.modelid}">
+                                    <input type="hidden" name="carid" value="${model.carid}">
+                                    <button type="submit" class="btn btn-sm btn-success">Add</button>
+                                </form>
+                            </td>
                         </tr>`;
                     tableBody.insertAdjacentHTML('beforeend', row);
                 });

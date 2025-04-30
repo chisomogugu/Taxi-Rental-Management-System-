@@ -1,44 +1,57 @@
+/* Page background and font */
 body {
   background-color: #fff8e1;
   font-family: 'Poppins', sans-serif;
 }
+
+/* Pink button style */
 .btn-pink {
-    background-color: #d81d7a;
-    color: white;
-    font-weight: bold;
-  }
-  
-  .btn-pink:hover {
-    background-color: #9b044f;
-    color: white;
-  }
-  .btn-secondary {
-    background-color: #cccccc;
-    color: #333;
-    border: none;
-    padding: 4px 12px;
-    border-radius: 4px;
-    font-weight: bold;
-  }
-  .modal {
-    position: fixed;
-    z-index: 999;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-  }
-  .modal-content {
-    background: #fff;
-    margin: 15% auto;
-    padding: 20px;
-    width: 300px;
-    border-radius: 8px;
-    text-align: center;
-  }
-  .modal-content textarea {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-  .modal-content .btn {
-    padding: 5px 15px;
-  }
+  background-color: #d81d7a;
+  color: white;
+  font-weight: bold;
+}
+
+.btn-pink:hover {
+  background-color: #9b044f;
+  color: white;
+}
+
+/* Secondary (gray) button */
+.btn-secondary {
+  background-color: #cccccc;
+  color: #333;
+  border: none;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* Modal background overlay */
+.modal {
+  position: fixed;
+  z-index: 999;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* Modal content box */
+.modal-content {
+  background: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  width: 300px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* Modal textarea styling */
+.modal-content textarea {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* Button inside modal */
+.modal-content .btn {
+  padding: 5px 15px;
+}

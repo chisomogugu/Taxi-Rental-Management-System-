@@ -233,7 +233,7 @@ def submit_review():
 
     except Exception as e:
         db.session.rollback()
-        print("❌ Error submitting review:", e)
+        print("Error submitting review:", e)
         return jsonify({'error': 'Review insert failed'}), 500
 
     
@@ -251,32 +251,32 @@ def confirm_booking():
         if not client_email:
             return jsonify({'error': 'Unauthorized'}), 401
 
-        # ✅ Step 1: Get all drivers for this model
+        # Step 1: Get all drivers for this model
         drivers = DriverModel.query.filter_by(modelid=modelid).all()
         all_driver_names = [d.drivername for d in drivers]
 
-        # ✅ Step 2: Remove busy drivers
+        # Step 2: Remove busy drivers
         busy_drivers = {r.drivername for r in Rent.query.filter_by(date=date).all()}
         available_drivers = [d for d in all_driver_names if d not in busy_drivers]
 
         if not available_drivers:
             return jsonify({'error': 'No available drivers for this model on that date.'}), 400
 
-        # ✅ Step 3: Randomly choose one driver
+        # Step 3: Randomly choose one driver
         assigned_driver = random.choice(available_drivers)
 
-        # ✅ Step 4: Get carid for this model
+        # Step 4: Get carid for this model
         car = Model.query.filter_by(modelid=modelid).first()
         if not car:
             return jsonify({'error': 'Model not found'}), 400
 
-        # ✅ Step 5: Generate unique rentid
+        # Step 5: Generate unique rentid
         existing_ids = {r[0] for r in db.session.query(Rent.rentid).all()}
         rentid = random.randint(1000, 9999)
         while rentid in existing_ids:
             rentid = random.randint(1000, 9999)
 
-        # ✅ Step 6: Insert new rent record
+        # Step 6: Insert new rent record
         new_rent = Rent(
             rentid=rentid,
             date=date,
@@ -291,7 +291,7 @@ def confirm_booking():
         return jsonify({'success': True})
 
     except Exception as e:
-        print("❌ Booking error:", str(e))
+        print("Booking error:", str(e))
         return jsonify({'error': str(e)}), 500
 
 @clients_bp.route('/manage_creditcard', methods=['GET', 'POST'])

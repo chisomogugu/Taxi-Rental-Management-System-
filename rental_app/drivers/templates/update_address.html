@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Update Address{% endblock %}
+
+{% block nav_items %}
+
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('drivers.rentals') }}">My Rentals</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('drivers.view_drivers_models') }}">My Models</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('drivers.update_address') }}">Update Address</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('drivers.dashboard') }}">Dashboard</a>
+</li>
+{% endblock %}
+
+{% block nav_profile %}
+<div class="dropdown">
+    <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile" width="30" height="30" class="rounded-circle">
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="{{ url_for('home.homepage') }}">Logout</a></li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+
+<div class="login-container">
+    <div class="login-box text-center">
+        <h2>Update Address</h2>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            
+            <div class="mb-3">
+                {{ form.road.label(class="form-label text-white") }}
+                {{ form.road(class="form-control") }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.number.label(class="form-label text-white") }}
+                {{ form.number(class="form-control") }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.city.label(class="form-label text-white") }}
+                {{ form.city(class="form-control") }}
+            </div>
+
+            {{ form.submit(class="btn btn-mmc btn-lg w-100") }}
+        </form>
+        <div class="mt-3">
+            <a href="{{ url_for('drivers.dashboard') }}" class="text-white">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

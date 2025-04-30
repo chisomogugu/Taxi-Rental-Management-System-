@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}My Bookings{% endblock %}
+
+{% block nav_items %}
+
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('drivers.rentals') }}">My Rentals</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('drivers.view_drivers_models') }}">My Models</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('drivers.update_address') }}">Update Address</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('drivers.dashboard') }}">Dashboard</a>
+</li>
+{% endblock %}
+
+{% block nav_profile %}
+<div class="dropdown">
+    <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile" width="30" height="30" class="rounded-circle">
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="{{ url_for('home.homepage') }}">Logout</a></li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/driver_rentals.css') }}">
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">My Rentals</h1>
+
+    <section class="rental-section">
+        <h3>Today's Bookings</h3>
+        {% if today_rentals %}
+        <ul class="rental-list">
+            {% for client, rent in today_rentals.items() %}
+            <li>
+                <strong>{{ rent.date.strftime('%B %-d, %Y') }} – </strong> Client: {{ client.name }} (Model {{ rent.modelid }})
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-muted">No bookings today.</p>
+        {% endif %}
+    </section>
+
+    <section class="rental-section">
+        <h3>Upcoming Bookings</h3>
+        {% if upcoming_rentals %}
+        <ul class="rental-list">
+            {% for client, rent in upcoming_rentals.items() %}
+            <li>
+                <strong>{{ rent.date.strftime('%B %-d, %Y') }} – </strong> Client: {{ client.name }} (Model {{ rent.modelid }})
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-muted">No upcoming bookings.</p>
+        {% endif %}
+    </section>
+
+    <section class="rental-section">
+        <h3>Past Bookings</h3>
+        {% if past_rentals %}
+        <ul class="rental-list">
+            {% for client, rent in past_rentals.items() %}
+            <li>
+                <strong>{{ rent.date.strftime('%B %-d, %Y') }} – </strong> Client: {{ client.name }} (Model {{ rent.modelid }})
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-muted">No past bookings.</p>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

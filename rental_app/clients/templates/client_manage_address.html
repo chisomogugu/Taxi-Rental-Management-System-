@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}Manage My Addresses{% endblock %}
+
+{% block nav_items %}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('clients.dashboard') }}">Home</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('clients.rental_history') }}">My Rent</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('clients.manage_address') }}">My Addresses</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('clients.manage_creditcard') }}">My Credit Cards</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('home.contact') }}">Contact</a>
+</li>
+{% endblock %}
+
+{% block nav_profile %}
+<div class="dropdown">
+    <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile" width="30" height="30" class="rounded-circle">
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="{{ url_for('home.homepage') }}">Logout</a></li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/client_manage_address.css') }}">
+
+<div class="container mt-4">
+    <h2>My Addresses</h2>
+
+    <table class="table table-bordered mt-3">
+        <thead class="table-light">
+            <tr>
+                <th>Road</th><th>Number</th><th>City</th><th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for addr in addresses %}
+            <tr>
+                <form method="POST">
+                    <input type="hidden" name="original" value="{{ addr.road }}|{{ addr.number }}|{{ addr.city }}">
+                    <td><input name="road" value="{{ addr.road }}" class="form-control" required></td>
+                    <td><input name="number" value="{{ addr.number }}" type="number" class="form-control" required></td>
+                    <td><input name="city" value="{{ addr.city }}" class="form-control" required></td>
+                    <td>
+                        <button name="action" value="update" class="btn btn-primary btn-sm">Update</button>
+                        <button name="action" value="delete" class="btn btn-danger btn-sm">Delete</button>
+                    </td>
+                </form>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h4>Add New Address</h4>
+    <form method="POST" class="row g-3 mt-2">
+        <input type="hidden" name="action" value="add">
+        <div class="col-md-4"><input name="road" placeholder="Road" class="form-control" required></div>
+        <div class="col-md-2"><input name="number" placeholder="Number" type="number" class="form-control" required></div>
+        <div class="col-md-4"><input name="city" placeholder="City" class="form-control" required></div>
+        <div class="col-md-2"><button type="submit" class="btn btn-success w-100">Add</button></div>
+    </form>
+</div>
+{% endblock %}

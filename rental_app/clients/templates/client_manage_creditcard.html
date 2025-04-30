@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}Manage Credit Cards{% endblock %}
+
+{% block nav_items %}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('clients.dashboard') }}">Home</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('clients.rental_history') }}">My Rent</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('clients.manage_address') }}">My Addresses</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('clients.manage_creditcard') }}">My Credit Cards</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('home.contact') }}">Contact</a>
+</li>
+{% endblock %}
+
+{% block nav_profile %}
+<div class="dropdown">
+    <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile" width="30" height="30" class="rounded-circle">
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="{{ url_for('home.homepage') }}">Logout</a></li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/client_manage_creditcard.css') }}">
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">💳 Manage My Credit Cards</h2>
+
+    <table class="table">
+        <thead class="table-light">
+            <tr>
+                <th colspan="5" class="text-center">My Saved Cards & Billing Info</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for card in cards %}
+            <tr>
+                <form method="POST">
+                    <input type="hidden" name="original_card" value="{{ card.cardnumber }}">
+                    <td colspan="5">
+                        <div class="card-address-wrapper row g-3">
+                            <!-- 💳 Credit Card Section -->
+                            <div class="col-md-4 card-box">
+                                <h6>💳 Credit Card</h6>
+                                <input name="cardnumber" value="{{ card.cardnumber }}" class="form-control" required>
+                            </div>
+
+                            <!-- 🏠 Payment Address Section -->
+                            <div class="col-md-8 address-box">
+                                <h6>🏠 Billing Address</h6>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input name="road" value="{{ card.road }}" placeholder="Road" class="form-control" required>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input name="number" value="{{ card.number }}" placeholder="Number" type="number" class="form-control" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input name="city" value="{{ card.city }}" placeholder="City" class="form-control" required>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button name="action" value="update" class="btn btn-primary w-100">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </form>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

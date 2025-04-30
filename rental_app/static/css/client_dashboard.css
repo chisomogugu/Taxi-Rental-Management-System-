@@ -88,3 +88,25 @@ body {
 .list-group-item:last-child {
     border-bottom: none;
 }
+/* ✨ Table style for modal inventory tables */
+.modal-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.modal-body th, .modal-body td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.modal-body th {
+    background-color: hsl(40, 97%, 50%); 
+    color: black;
+    font-weight: bold;
+}
+
+.modal-body tr:nth-child(even) {
+    background-color: #f2f2f2; 
+}

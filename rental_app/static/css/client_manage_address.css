@@ -1,0 +1,16 @@
+body {
+    background-color: #fff8e1;
+    font-family: 'Poppins', sans-serif;
+}
+
+h2, h4 {
+    color: #343a40;
+    font-weight: bold;
+}
+
+.table {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}

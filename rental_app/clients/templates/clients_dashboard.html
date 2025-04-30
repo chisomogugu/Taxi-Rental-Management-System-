@@ -4,16 +4,16 @@
 
 {% block nav_items %}
 <li class="nav-item">
-    <a class="nav-link" href="{{ url_for('home.homepage') }}">Home</a>
+    <a class="nav-link" href="{{ url_for('clients.dashboard') }}">Home</a>
 </li>
 <li class="nav-item">
-    <a class="nav-link" href="{{ url_for('clients.dashboard') }}">Dashboard</a>
+  <a class="nav-link" href="{{ url_for('clients.rental_history') }}">My Rent</a>
 </li>
 <li class="nav-item">
-    <a class="nav-link" href="{{ url_for('clients.rentals') }}">My Rent</a>
+    <a class="nav-link" href="{{ url_for('clients.manage_address') }}">My Addresses</a>
 </li>
 <li class="nav-item">
-    <a class="nav-link" href="{{ url_for('clients.manage_creditcard') }}">Manage Credit Card</a>
+    <a class="nav-link" href="{{ url_for('clients.manage_creditcard') }}">My Credit Cards</a>
 </li>
 <li class="nav-item">
     <a class="nav-link" href="{{ url_for('home.contact') }}">Contact</a>
@@ -35,9 +35,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/client_dashboard.css') }}">
 
 <div class="main">
-    <!-- FIXME -->
-    <div class="welcome">Welcome, Client!</div>
-
+    <div class="welcome">Welcome, {{ client_name }}!</div>
 
     <!-- FIXME -->
     <div class="car-grid">
@@ -93,39 +91,35 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
+            <button id="back-button" style="display:none; background:none; border:none;">
+              <img src="https://cdn-icons-png.flaticon.com/512/271/271220.png" width="25" height="25">
+            </button>
             <h5 class="modal-title" id="inventoryModalLabel">Car Models</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <ul id="inventory-list" class="list-group">
-              <!-- dynamic content goes here -->
-            </ul>
+            <!-- Inventory List -->
+            <div id="inventory-list">
+              <!-- table dynamically inserted here -->
+            </div>
+          
+            <!-- Date Form -->
+            <div id="model-selection-form" style="display:none; margin-top:20px;">
+              <h5 id="selected-model-info"></h5>
+              <form id="dateForm">
+                <input type="date" id="rental-date" required class="form-control mb-2">
+                <button type="submit" class="btn btn-primary">Check Availability</button>
+              </form>
+            </div>
+          
           </div>
         </div>
       </div>
     </div>
+</div> 
+  
+{% endblock %}
 
-</div>
-
-<script>
-  document.querySelectorAll('.book-btn').forEach(button => {
-    button.addEventListener('click', function() {
-      const brand = this.dataset.brand;
-      fetch(`/inventory/${brand}`)
-        .then(response => response.json())
-        .then(data => {
-          const inventoryList = document.getElementById('inventory-list');
-          inventoryList.innerHTML = '';
-          data.models.forEach(model => {
-            const li = document.createElement('li');
-            li.className = 'list-group-item';
-            li.innerText = model;
-            inventoryList.appendChild(li);
-          });
-          new bootstrap.Modal(document.getElementById('inventoryModal')).show();
-        });
-    });
-  });
-</script>
-
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/clients_dashboard.js') }}"></script>
 {% endblock %}

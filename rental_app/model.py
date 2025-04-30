@@ -92,7 +92,7 @@ class Review(db.Model):
     
     reviewid = db.Column(db.Integer, primary_key=True)
     drivername = db.Column(db.String(100), db.ForeignKey('driver.name'), primary_key=True)
-    message = db.Column(db.CHAR)
+    message = db.Column(db.Text, nullable=True)
     rating = db.Column(db.Integer)
     clientemail = db.Column(db.String(100), db.ForeignKey('client.emailaddress'), nullable=False)
     
@@ -103,7 +103,7 @@ class Rent(db.Model):
     __tablename__ = 'rent'
     
     rentid = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date, default=datetime.utcnow)
+    date = db.Column(db.Date, nullable=False)
     drivername = db.Column(db.String(100), db.ForeignKey('driver.name'), nullable=False)
     clientemail = db.Column(db.String(100), db.ForeignKey('client.emailaddress'), nullable=False)
     modelid = db.Column(db.Integer, nullable=False)

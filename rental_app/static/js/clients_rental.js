@@ -1,16 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () {
-    fetchRentalData();
+    fetchRentalData(); // Load rental history
 
     const modal = document.getElementById('reviewModal');
     const closeModal = document.querySelector('#reviewModal .close');
     const nextBtn = document.getElementById('submitReviewBtn');
     let currentDriver = null;
 
+    // Close modal when (x) is clicked
     closeModal.onclick = () => {
         modal.style.display = 'none';
         resetModal();
     };
 
+    // Close modal when clicked outside
     window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = 'none';
@@ -18,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
+    // Fetch rental history data
     function fetchRentalData() {
         fetch('/client/my_rentals')
             .then(response => response.json())
@@ -43,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     tbody.appendChild(row);
                 });
 
+                // Add click handler to Review buttons
                 document.querySelectorAll('.review-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         currentDriver = btn.getAttribute('data-driver');
@@ -53,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(() => alert("Could not fetch rental data."));
     }
 
+    // Submit review
     nextBtn.onclick = () => {
         const message = document.getElementById('reviewMessage').value.trim();
         const rating = document.getElementById('reviewRating').value;
@@ -85,6 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(() => alert("Failed to submit review."));
     };
 
+    // Reset modal inputs
     function resetModal() {
         document.getElementById('reviewMessage').value = '';
         document.getElementById('reviewRating').value = '';

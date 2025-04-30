@@ -1,20 +1,23 @@
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('✅ JavaScript Loaded!');
+    console.log(' JavaScript Loaded!');
 
+    // State variables
     let models = [];
     const viewHistory = [];
     let selectedDate = '';
     let isBackNavigation = false;
 
+    // UI elements
     const buttons = document.querySelectorAll('.book-btn');
     const inventoryModal = new bootstrap.Modal(document.getElementById('inventoryModal'));
     const inventoryList = document.getElementById('inventory-list');
     const backButton = document.getElementById('back-button');
 
+    // Handle Book button clicks
     buttons.forEach(button => {
         button.addEventListener('click', function () {
             const brand = this.dataset.brand;
-            console.log(`📦 Book clicked for brand: ${brand}`);
+            console.log(` Book clicked for brand: ${brand}`);
 
             viewHistory.length = 0;
             viewHistory.push('models');
@@ -25,16 +28,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(response => response.json())
                 .then(data => {
                     models = data.models;
-                    console.log('✅ Models fetched:', models);
+                    console.log(' Models fetched:', models);
                     displayModelTable();
                 })
                 .catch(err => {
-                    console.error('❌ Fetch error:', err);
+                    console.error(' Fetch error:', err);
                     alert('Error loading car models. Try again.');
                 });
         });
     });
 
+    // Show model table
     function displayModelTable() {
         if (!isBackNavigation) viewHistory.push('models');
         isBackNavigation = false;
@@ -74,11 +78,13 @@ document.addEventListener('DOMContentLoaded', function () {
         inventoryList.innerHTML = tableHTML;
         inventoryModal.show();
 
+        // Wait until DOM is updated
         setTimeout(() => {
             document.getElementById('next-btn').addEventListener('click', showDateSelection);
         }, 0);
     }
 
+    // Show date picker
     function showDateSelection() {
         if (!isBackNavigation) viewHistory.push('date');
         isBackNavigation = false;
@@ -95,6 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         inventoryList.innerHTML = dateHTML;
 
+        // Check availability on date click
         setTimeout(() => {
             document.getElementById('check-availability').addEventListener('click', function () {
                 selectedDate = document.getElementById('rental-date').value;
@@ -107,6 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 0);
     }
 
+    // Show available models for selected date
     async function showAvailability(date) {
         if (!isBackNavigation) viewHistory.push('availability');
         isBackNavigation = false;
@@ -120,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         available: data.available
                     }))
                     .catch(err => {
-                        console.error(`❌ Failed to check model ${model.modelid}:`, err);
+                        console.error(` Failed to check model ${model.modelid}:`, err);
                         return { ...model, available: false };
                     })
             )
@@ -161,10 +169,11 @@ document.addEventListener('DOMContentLoaded', function () {
         resultHTML += `</tbody></table>`;
         inventoryList.innerHTML = resultHTML;
 
-        // Bind book buttons
+        // Add Book Now button listeners
         setTimeout(() => attachBookNowHandlers(), 100);
     }
 
+    // Handle confirm booking click
     function attachBookNowHandlers() {
         document.querySelectorAll('.book-now-btn').forEach(button => {
             button.addEventListener('click', function () {
@@ -201,13 +210,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
                             const result = await res.json();
                             if (result.success) {
-                                alert("✅ Booking Confirmed!");
+                                alert(" Booking Confirmed!");
                                 window.location.reload();
                             } else {
-                                alert("❌ " + (result.error || "Booking failed."));
+                                alert(" " + (result.error || "Booking failed."));
                             }
                         } catch (err) {
-                            console.error("❌ Error submitting booking:", err);
+                            console.error(" Error submitting booking:", err);
                             alert("An error occurred while booking.");
                         }
                     });
@@ -216,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // 🔙 Back Button Logic
+    // Go back to previous step
     backButton.addEventListener('click', function () {
         if (viewHistory.length > 1) {
             viewHistory.pop();

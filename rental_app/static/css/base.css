@@ -3,7 +3,7 @@ body {
 }
 
 .navbar {
-    background-color: #1f1f1f; /* deep navy */
+    background-color: #1f1f1f; 
     padding-top: 1rem;
     padding-bottom: 1rem;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);

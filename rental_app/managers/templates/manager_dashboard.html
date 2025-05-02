@@ -1,0 +1,183 @@
+{# templates/manager_dashboard.html #}
+{% extends 'base.html' %}
+{% block title %}Manager Dashboard{% endblock %}
+
+{% block nav_items %}
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('managers.top_k_clients') }}">Top K Clients</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('managers.model_usage_stats') }}">Model Usage Stats</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('managers.driver_performance') }}">Driver Performance</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('managers.cross_city_clients') }}">Cross-City Clients</a>
+</li>
+<li class="nav-item">
+ <a class="nav-link" href="{{ url_for('managers.dashboard') }}">Dashboard</a>
+ </li>
+{% endblock %}
+
+{% block nav_profile %}
+<div class="dropdown">
+  <a class="btn btn-outline-light dropdown-toggle" href="#" role="button"
+     data-bs-toggle="dropdown" aria-expanded="false">
+    <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+         alt="Profile" width="30" height="30" class="rounded-circle">
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li>
+      <a class="dropdown-item" href="{{ url_for('home.homepage') }}">Logout</a>
+    </li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/manager_dashboard.css') }}">
+
+<div class="main">
+  
+  <!-- CRUD Forms -->
+  <div class="row">
+
+    <!-- Add Driver -->
+    <div class="col-md-6 mb-4">
+      <div class="card">
+        <div class="card-header">Add Driver</div>
+        <div class="card-body">
+          <form method="POST" action="{{ url_for('managers.add_driver') }}">
+            {{ add_driver_form.hidden_tag() }}
+            <div class="mb-2">
+              {{ add_driver_form.driver_name.label(class="form-label") }}
+              {{ add_driver_form.driver_name(class="form-control", placeholder="e.g. Jane Doe") }}
+            </div>
+            <div class="mb-2">
+              {{ add_driver_form.road.label(class="form-label") }}
+              {{ add_driver_form.road(class="form-control", placeholder="Street Name") }}
+            </div>
+            <div class="mb-2">
+              {{ add_driver_form.number.label(class="form-label") }}
+              {{ add_driver_form.number(class="form-control", placeholder="Zip Code") }}
+            </div>
+            <div class="mb-2">
+              {{ add_driver_form.city.label(class="form-label") }}
+              {{ add_driver_form.city(class="form-control", placeholder="City") }}
+            </div>
+            {{ add_driver_form.submit(class="btn btn-primary") }}
+          </form>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Remove Driver -->
+    <div class="col-md-6 mb-4">
+      <div class="card">
+        <div class="card-header">Remove Driver</div>
+        <div class="card-body">
+          <form method="POST" action="{{ url_for('managers.remove_driver') }}">
+            {{ remove_driver_form.hidden_tag() }}
+            <div class="mb-2">
+              {{ remove_driver_form.driver_name.label(class="form-label") }}
+              {{ remove_driver_form.driver_name(class="form-control", placeholder="Driver Name") }}
+            </div>
+            {{ remove_driver_form.submit(class="btn btn-danger") }}
+          </form>
+        </div>
+      </div>
+    </div>
+    
+  <!-- Add Car -->
+  <div class="col-md-6 mb-4">
+    <div class="card">
+      <div class="card-header">Add Car</div>
+      <div class="card-body">
+        <form method="POST" action="{{ url_for('managers.add_car') }}">
+          {{ add_car_form.hidden_tag() }}
+          <div class="mb-2">
+            {{ add_car_form.carid.label(class="form-label") }}
+            {{ add_car_form.carid(class="form-control", placeholder="e.g. 1") }}
+          </div>
+          <div class="mb-2">
+            {{ add_car_form.brand.label(class="form-label") }}
+            {{ add_car_form.brand(class="form-control") }}
+          </div>
+          {{ add_car_form.submit(class="btn btn-primary") }}
+        </form>
+      </div>
+    </div>
+  </div>
+
+    <!-- Remove Car -->
+    <div class="col-md-6 mb-4">
+      <div class="card">
+        <div class="card-header">Remove Car</div>
+        <div class="card-body">
+          <form method="POST" action="{{ url_for('managers.remove_car') }}">
+            {{ remove_car_form.hidden_tag() }}
+            <div class="mb-2">
+              {{ remove_car_form.car_id.label(class="form-label") }}
+              {{ remove_car_form.car_id(class="form-control") }}
+            </div>
+            {{ remove_car_form.submit(class="btn btn-danger") }}
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Model -->
+    <div class="card mb-4">
+      <div class="card-header">Add Model</div>
+      <div class="card-body">
+        <form method="POST" action="{{ url_for('managers.add_model') }}">
+          {{ add_model_form.hidden_tag() }}
+
+          <div class="mb-2">
+            {{ add_model_form.modelid.label(class="form-label") }}
+            {{ add_model_form.modelid(class="form-control", placeholder="e.g. 101") }}
+          </div>
+          <div class="mb-2">
+            {{ add_model_form.carid.label(class="form-label") }}
+            {{ add_model_form.carid(class="form-control", placeholder="e.g. 1") }}
+          </div>
+          <div class="mb-2">
+            {{ add_model_form.constructionyear.label(class="form-label") }}
+            {{ add_model_form.constructionyear(class="form-control", placeholder="e.g. 2022") }}
+          </div>
+          <div class="mb-2">
+            {{ add_model_form.color.label(class="form-label") }}
+            {{ add_model_form.color(class="form-control") }}
+          </div>
+          <div class="mb-2">
+            {{ add_model_form.transmissiontype.label(class="form-label") }}
+            {{ add_model_form.transmissiontype(class="form-control", placeholder="e.g. Automatic/Manual") }}
+          </div>
+
+      {{ add_model_form.submit(class="btn btn-primary") }}
+    </form>
+  </div>
+</div>
+
+     <!-- Remove Model -->
+    <div class="col-md-6 mb-4">
+      <div class="card">
+        <div class="card-header">Remove Model</div>
+        <div class="card-body">
+          <form method="POST" action="{{ url_for('managers.remove_model') }}">
+            {{ remove_model_form.hidden_tag() }}
+            <div class="mb-2">
+              {{ remove_model_form.model_id.label(class="form-label") }}
+              {{ remove_model_form.model_id(class="form-control") }}
+            </div>
+            <div class="mb-2">
+                {{ remove_model_form.car_id.label(class="form-label") }}
+                {{ remove_model_form.car_id(class="form-control") }}
+              </div>
+            {{ remove_model_form.submit(class="btn btn-danger") }}
+          </form>
+        </div>
+      </div>
+
+  {% endblock %}

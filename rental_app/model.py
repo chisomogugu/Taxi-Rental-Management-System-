@@ -52,7 +52,7 @@ class Car(db.Model):
     
     carid = db.Column(db.Integer, primary_key=True)
     brand = db.Column(db.String(100))
-    
+
     models = db.relationship('Model', backref='car', lazy=True)
     
     def __repr__(self):

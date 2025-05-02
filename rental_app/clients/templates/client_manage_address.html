@@ -3,9 +3,6 @@
 
 {% block nav_items %}
 <li class="nav-item">
-    <a class="nav-link" href="{{ url_for('clients.dashboard') }}">Home</a>
-</li>
-<li class="nav-item">
   <a class="nav-link" href="{{ url_for('clients.rental_history') }}">My Rent</a>
 </li>
 <li class="nav-item">
@@ -15,7 +12,7 @@
     <a class="nav-link" href="{{ url_for('clients.manage_creditcard') }}">My Credit Cards</a>
 </li>
 <li class="nav-item">
-    <a class="nav-link" href="{{ url_for('home.contact') }}">Contact</a>
+  <a class="nav-link" href="{{ url_for('clients.dashboard') }}">Home</a>
 </li>
 {% endblock %}
 

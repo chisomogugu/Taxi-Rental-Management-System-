@@ -3,12 +3,8 @@
 {% block title %}Client Dashboard{% endblock %}  {# Page title #}
 
 {% block nav_items %}
-<!-- Navigation links -->
 <li class="nav-item">
-    <a class="nav-link" href="{{ url_for('clients.dashboard') }}">Home</a>
-</li>
-<li class="nav-item">
-    <a class="nav-link" href="{{ url_for('clients.my_rentals') }}">My Rent</a>
+  <a class="nav-link" href="{{ url_for('clients.rental_history') }}">My Rent</a>
 </li>
 <li class="nav-item">
     <a class="nav-link" href="{{ url_for('clients.manage_address') }}">My Addresses</a>
@@ -17,7 +13,7 @@
     <a class="nav-link" href="{{ url_for('clients.manage_creditcard') }}">My Credit Cards</a>
 </li>
 <li class="nav-item">
-    <a class="nav-link" href="{{ url_for('home.contact') }}">Contact</a>
+  <a class="nav-link" href="{{ url_for('clients.dashboard') }}">Home</a>
 </li>
 {% endblock %}
 
@@ -63,7 +59,7 @@
     <div class="modal-content">
       <span class="close">&times;</span>
       <h3>Leave a Review</h3>
-      <textarea id="reviewMessage" rows="4" cols="40" placeholder="Write your review..."></textarea><br>
+      <textarea id="reviewMessage" rows="4" maxlength="300" placeholder="Write your review..."></textarea>
       <select id="reviewRating" class="form-select mt-2 mb-3">
           <option value="" disabled selected>Select rating</option>
           <option value="1">⭐ 1</option>

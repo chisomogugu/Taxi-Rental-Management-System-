@@ -1,0 +1,59 @@
+body {
+  background-color: #fff8e1;
+  font-family: 'Poppins', sans-serif;
+  padding-bottom: 3rem;
+}
+
+.model-usage-card {
+  max-width: 700px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  background-color: #ffffffcc;
+  backdrop-filter: blur(4px);
+  overflow: hidden;
+}
+
+.model-usage-card .card-header {
+  font-size: 1.5rem;
+  font-weight: 600;
+  background-color: #ffe082;
+  color: #333;
+  text-align: center;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.model-usage-card .list-group-item {
+  padding: 1rem 1.5rem;
+  font-size: 1.05rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  background-color: #fffefb;
+  border: none;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.model-usage-card .list-group-item:hover {
+  background-color: #fff3cd;
+}
+
+.model-usage-card .list-group-item:last-child {
+  border-bottom: none;
+}
+
+.model-usage-card .badge {
+  font-size: 0.95rem;
+  padding: 0.5em 1em;
+  background-color: #ffc107;
+  color: #333;
+  font-weight: 500;
+  border-radius: 2rem;
+}
+
+.model-usage-card .text-muted {
+  font-size: 1rem;
+  padding: 1rem;
+  color: #888;
+}

@@ -1,0 +1,70 @@
+body {
+  background-color: #fff8e1;
+  font-family: 'Poppins', sans-serif;
+  padding-bottom: 3rem;
+}
+
+/* Card styles */
+.card {
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  border: none;
+  background: #ffffffee;
+}
+
+.card-header {
+  font-weight: 600;
+  background-color: #f0f0f0;
+  font-size: 1.2rem;
+  color: #333;
+  border-radius: 12px 12px 0 0;
+  text-align: center;
+}
+
+/* Input fields */
+.form-label {
+  font-weight: 500;
+  color: #555;
+}
+
+.form-control {
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: border-color 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: #ffc107;
+  box-shadow: 0 0 0 0.15rem rgba(255, 193, 7, 0.3);
+}
+
+/* Submit button */
+.btn-primary {
+  background-color: #ffc107;
+  border-color: #ffc107;
+  color: #000;
+  font-weight: 500;
+  border-radius: 8px;
+}
+
+.btn-primary:hover {
+  background-color: #e0ad06;
+  border-color: #e0ad06;
+}
+
+/* Results list */
+.list-group-item {
+  background-color: #fffef7;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  color: #333;
+  transition: background-color 0.2s ease;
+}
+
+.list-group-item:hover {
+  background-color: #fff3cc;
+  cursor: pointer;
+}

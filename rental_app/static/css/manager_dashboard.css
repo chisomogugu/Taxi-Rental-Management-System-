@@ -1,0 +1,86 @@
+body {
+    /* background-color: #5c5c5c; your brand background */
+    background: url("../img/banner2.png")  no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+}
+
+h2, .card-header {
+    font-weight: 600;
+    color: #333;
+}
+
+.banner-img {
+    width: 100%;
+    max-height: 220px;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 12px;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+    background-color: #ffffff;
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+.card-header {
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ddd;
+    font-size: 1.1rem;
+    border-radius: 15px 15px 0 0;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #444;
+}
+
+input.form-control, select.form-control {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: none;
+    transition: border-color 0.2s ease;
+}
+
+input.form-control:focus, select.form-control:focus {
+    border-color: #ffc107;
+    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+}
+
+.btn-primary {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #000;
+    font-weight: 500;
+    border-radius: 8px;
+}
+
+.btn-primary:hover {
+    background-color: #e0ad06;
+    border-color: #e0ad06;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.main {
+    padding: 2rem;
+}

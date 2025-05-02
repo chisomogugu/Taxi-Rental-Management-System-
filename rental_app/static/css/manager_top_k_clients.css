@@ -1,0 +1,19 @@
+body {
+  background-color: #fff8e1;
+  font-family: 'Poppins', sans-serif;
+}
+.top-k-card {
+    max-width: 800px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .top-k-card table {
+    margin-bottom: 0;  /* remove extra spacing under table */
+  }
+
+.banner-img {
+  max-height: 200px; /*Feel free to tweak 300px to whatever maximum height you like*/
+  width: 100%;
+  object-fit: cover; /* preserves aspect-ratio and crops excess */
+}
+
+  

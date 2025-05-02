@@ -60,7 +60,7 @@ CREATE TABLE Model (
 
 CREATE TABLE Review (
     ReviewID INT,
-    Message CHAR,
+    Message VARCHAR(255),
     Rating INT,
     DriverName VARCHAR(100) NOT NULL,
     ClientEmail VARCHAR(100) NOT NULL,

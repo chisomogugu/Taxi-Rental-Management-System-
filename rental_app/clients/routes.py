@@ -13,7 +13,7 @@ def login():
     if form.validate_on_submit():
         client = Client.query.filter_by(emailaddress=form.emailaddress.data).first()
         if client:
-            session['client_email'] = client.emailaddress   # <-- Save client email in session
+            session['client_email'] = client.emailaddress   #Save client email in session
             flash('Login successful!', 'success')
             return redirect(url_for('clients.dashboard'))
         else:
@@ -102,6 +102,7 @@ def register():
 @clients_bp.route('/dashboard', methods=['GET'])
 def dashboard():
     client_email = session.get('client_email')
+    
     if not client_email:
         flash('You must log in first.', 'danger')
         return redirect(url_for('clients.login'))
@@ -109,7 +110,9 @@ def dashboard():
     client = Client.query.filter_by(emailaddress=client_email).first()
     client_name = client.name.capitalize() if client else "Client"
 
-    return render_template('clients_dashboard.html', client_name=client_name)
+    # Get all car brands from the database
+    cars = Car.query.all()
+    return render_template('clients_dashboard.html', client_name=client_name, cars=cars)
 
 @clients_bp.route('/book/<brand>', methods=['GET'])
 def book_models(brand):
@@ -202,20 +205,18 @@ def submit_review():
 
         drivername = data['drivername']
         rating = int(data['rating'])
-        message = data['message'][:255]
-        review_date = data['date']  # 👈 ensure date is passed in request
+        message = data['message'][:255]  # Limit message length
 
-        # 🧠 Check if this driver was already reviewed by this client on that date
+        # Check if this driver was already reviewed by this client
         existing = Review.query.filter_by(
             drivername=drivername,
-            clientemail=client_email,
-            date=review_date
+            clientemail=client_email
         ).first()
 
         if existing:
-            return jsonify({'error': 'You already reviewed this driver for that date.'}), 400
+            return jsonify({'error': 'You already reviewed this driver.'}), 400
 
-        # Generate review ID (you can switch to autoincrement later)
+        # Generate review ID
         total_reviews = Review.query.count()
 
         review = Review(
@@ -223,8 +224,7 @@ def submit_review():
             drivername=drivername,
             clientemail=client_email,
             message=message,
-            rating=rating,
-            date=review_date
+            rating=rating
         )
 
         db.session.add(review)
@@ -234,11 +234,7 @@ def submit_review():
     except Exception as e:
         db.session.rollback()
         print("Error submitting review:", e)
-        return jsonify({'error': 'Review insert failed'}), 500
-
-    
-import random
-from rental_app.model import Rent, DriverModel, Model
+        return jsonify({'error': str(e)}), 500
 
 @clients_bp.route('/confirm_booking', methods=['POST'])
 def confirm_booking():
@@ -251,26 +247,26 @@ def confirm_booking():
         if not client_email:
             return jsonify({'error': 'Unauthorized'}), 401
 
-        # Step 1: Get all drivers for this model
+        #Get all drivers for this model
         drivers = DriverModel.query.filter_by(modelid=modelid).all()
         all_driver_names = [d.drivername for d in drivers]
 
-        # Step 2: Remove busy drivers
+        #Remove busy drivers
         busy_drivers = {r.drivername for r in Rent.query.filter_by(date=date).all()}
         available_drivers = [d for d in all_driver_names if d not in busy_drivers]
 
         if not available_drivers:
             return jsonify({'error': 'No available drivers for this model on that date.'}), 400
 
-        # Step 3: Randomly choose one driver
+        # Randomly choose one driver
         assigned_driver = random.choice(available_drivers)
 
-        # Step 4: Get carid for this model
+        # Get carid for this model
         car = Model.query.filter_by(modelid=modelid).first()
         if not car:
             return jsonify({'error': 'Model not found'}), 400
 
-        # Step 5: Generate unique rentid
+        # Generate unique rentid
         existing_ids = {r[0] for r in db.session.query(Rent.rentid).all()}
         rentid = random.randint(1000, 9999)
         while rentid in existing_ids:

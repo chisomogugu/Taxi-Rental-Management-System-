@@ -21,56 +21,49 @@ body {
     text-align: center;
 }
 
-/* Car grid layout */
-.car-grid {
+.car-gallery {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
+    grid-template-columns: repeat(auto-fit, minmax(400px, 2fr));
     gap: 30px;
-    padding: 20px;
-    justify-items: center;
+    margin: 40px;
 }
 
-/* Car card container */
 .car-card {
-    background-color: #f9f9f9;
-    border-radius: 10px;
+    background-color: white;
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    text-align: center;
-    padding-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
 }
 
-/* Car image style */
 .car-card img {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    object-position: center;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
 }
 
-/* Card hover effect */
 .car-card:hover {
     transform: translateY(-8px);
 }
-
-/* Book button style */
-.book-btn {
-    background-color: #ffc107;
-    color: black;
-    font-weight: bold;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+.car-info {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-/* Book button hover effect */
+.book-btn {
+    background-color: #ffc107;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
 .book-btn:hover {
     background-color: #e0a800;
     color: white;
-    transform: scale(1.05);
 }
 
 /* Modal appearance */

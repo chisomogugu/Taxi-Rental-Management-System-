@@ -4,9 +4,6 @@
 
 {% block nav_items %}
 <li class="nav-item">
-    <a class="nav-link" href="{{ url_for('clients.dashboard') }}">Home</a>
-</li>
-<li class="nav-item">
   <a class="nav-link" href="{{ url_for('clients.rental_history') }}">My Rent</a>
 </li>
 <li class="nav-item">
@@ -16,7 +13,7 @@
     <a class="nav-link" href="{{ url_for('clients.manage_creditcard') }}">My Credit Cards</a>
 </li>
 <li class="nav-item">
-    <a class="nav-link" href="{{ url_for('home.contact') }}">Contact</a>
+  <a class="nav-link" href="{{ url_for('clients.dashboard') }}">Home</a>
 </li>
 {% endblock %}
 
@@ -36,52 +33,16 @@
 
 <div class="main">
     <div class="welcome">Welcome, {{ client_name }}!</div>
-
-    <div class="car-grid">
-        <!-- Car 1 -->
+    <div class="car-gallery">
+      {% for car in cars %}
       <div class="car-card">
-        <img src="https://images.pexels.com/photos/27639321/pexels-photo-27639321/free-photo-of-the-left-front-view-of-the-kia-k5-stopped-in-front-of-a-green-glass-building.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
-        <button class="book-btn" data-brand="Kia">Book</button>
-    </div>
-    <!-- Car 2 -->
-    <div class="car-card">
-        <img src="https://images.pexels.com/photos/2036544/pexels-photo-2036544.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Car 2">
-        <button class="book-btn" data-brand="Toyota">Book</button>
-    </div>
-    <!-- Car 3 -->
-    <div class="car-card">
-        <img src="https://images.pexels.com/photos/892522/pexels-photo-892522.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Car 3">
-        <button class="book-btn" data-brand="BMW">Book</button>
-    </div>
-    <!-- Car 4 -->
-    <div class="car-card">
-        <img src="https://images.pexels.com/photos/1719647/pexels-photo-1719647.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Car 4">
-        <button class="book-btn" data-brand="Audi">Book</button>
-    </div>
-    <!-- Car 5 -->
-    <div class="car-card">
-        <img src="https://images.pexels.com/photos/13101566/pexels-photo-13101566.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Car 5">
-        <button class="book-btn" data-brand="Mercedes">Book</button>
-    </div>
-    <!-- Car 6 -->
-    <div class="car-card">
-        <img src="https://images.pexels.com/photos/30306584/pexels-photo-30306584/free-photo-of-white-electric-car-on-abu-dhabi-highway.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
-        <button class="book-btn" data-brand="Tesla">Book</button>
-    </div>
-    <!-- Car 7 -->
-    <div class="car-card">
-        <img src="https://images.pexels.com/photos/116675/pexels-photo-116675.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
-        <button class="book-btn" data-brand="Range Rover">Book</button>
-    </div>
-    <!-- Car 8 -->
-    <div class="car-card">
-        <img src="https://images.pexels.com/photos/119435/pexels-photo-119435.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Car 8">
-        <button class="book-btn" data-brand="Jeep">Book</button>
-    </div>
-    <!-- Car 9 -->
-    <div class="car-card">
-        <img src="https://images.pexels.com/photos/5471133/pexels-photo-5471133.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Car 9">
-        <button class="book-btn" data-brand="Volkswagen">Book</button>
+          <img src="{{ url_for('static', filename='img/cars/' + car.brand + '.png') }}" alt="{{ car.brand }} image">
+          <div class="car-info">
+              <h4>{{ car.brand }}</h4>
+              <button class="book-btn" data-brand="{{ car.brand }}">BOOK</button>
+          </div>
+      </div>
+      {% endfor %}
     </div>
     </div>
 

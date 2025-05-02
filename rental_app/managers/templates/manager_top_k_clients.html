@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Top Clients{% endblock %}
+
+{% block nav_items %}
+
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('managers.top_k_clients') }}">Top K Clients</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('managers.model_usage_stats') }}">Model Usage Stats</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('managers.driver_performance') }}">Driver Performance</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('managers.cross_city_clients') }}">Cross-City Clients</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('managers.dashboard') }}">Dashboard</a>
+</li>
+{% endblock %}
+
+{% block nav_profile %}
+<div class="dropdown">
+  <a class="btn btn-outline-light dropdown-toggle" href="#" role="button"
+     data-bs-toggle="dropdown" aria-expanded="false">
+    <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+         alt="Profile" width="30" height="30" class="rounded-circle">
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li>
+      <a class="dropdown-item" href="{{ url_for('home.homepage') }}">Logout</a>
+    </li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<!-- Banner Image -->
+<div class="row mb-4">
+  <div class="col">
+    <img
+      src="{{ url_for('static', filename='img/top_clients.jpg') }}"
+      alt="City Taxi Banner"
+      class="banner-img rounded"
+    >
+  </div>
+</div>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/manager_top_k_clients.css') }}">
+
+<div class="container mt-4">
+
+<!-- explanatory text above the form -->
+<div class="row justify-content-center mb-3">
+<div class="col-md-6 text-center">
+<p class="lead">
+Enter a value below to see the top clients 
+by number of rentals.
+</p>
+</div>
+</div>
+
+  <!-- Top-K Input Form -->
+  <div class="row justify-content-center mb-4 mb-md-5">
+  <div class="row justify-content-center mb-4 mb-md-5"> 
+  <div class="row justify-content-center mb-4 mb-md-5">  
+    <div class="col-md-4">
+      <form method="POST" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="input-group">
+          {{ form.k(class="form-control", placeholder="Enter K") }}
+          <button class="btn btn-primary" type="submit">{{ form.submit.label.text }}</button>
+        </div>
+        {% if form.k.errors %}
+          <div class="form-text text-danger">
+            {{ form.k.errors[0] }}
+          </div>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+
+  {# Only show the table once we have results #}
+  {% if clients %}
+  <div class="card mx-auto top-k-card">
+    <div class="card-header text-center">Top {{ clients|length }} Clients</div>
+    <div class="table-responsive">
+      <table class="table table-striped mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th class="text-end">Rentals</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in clients %}
+          <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>{{ c.name }}</td>
+            <td>{{ c.email }}</td>
+            <td class="text-end">{{ c.rentals }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% elif form.is_submitted() %}
+    <p class="text-center text-muted">No clients found.</p>
+  {% endif %}
+
+</div>
+{% endblock %}
+

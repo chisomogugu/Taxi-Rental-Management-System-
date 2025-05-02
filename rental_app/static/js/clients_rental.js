@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert("Failed to submit review.");
             }
         })
-        .catch(() => alert("Failed to submit review."));
+        .catch(() => alert("Failed to submit review2."));
     };
 
     // Reset modal inputs

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Cross-City Clients{% endblock %}
+
+{% block nav_items %}
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('managers.top_k_clients') }}">Top K Clients</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('managers.model_usage_stats') }}">Model Usage Stats</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('managers.driver_performance') }}">Driver Performance</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('managers.cross_city_clients') }}">Cross-City Clients</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('managers.dashboard') }}">Dashboard</a>
+</li>
+{% endblock %}
+
+{% block nav_profile %}
+<div class="dropdown">
+  <a class="btn btn-outline-light dropdown-toggle" href="#" role="button"
+     data-bs-toggle="dropdown" aria-expanded="false">
+    <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+         alt="Profile" width="30" height="30" class="rounded-circle">
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li>
+      <a class="dropdown-item" href="{{ url_for('home.homepage') }}">Logout</a>
+    </li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/manager_cross_city.css') }}">
+<div class="container mt-4">
+  <div class="card mx-auto" style="max-width:500px;">
+    <div class="card-header text-center">Find Cross-City Clients</div>
+    <div class="card-body">
+      <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+          {{ form.city1.label(class="form-label") }}
+          {{ form.city1(class="form-control", placeholder="e.g. New York") }}
+        </div>
+        <div class="mb-3">
+          {{ form.city2.label(class="form-label") }}
+          {{ form.city2(class="form-control", placeholder="e.g. Chicago") }}
+        </div>
+        {{ form.submit(class="btn btn-primary") }}
+      </form>
+    </div>
+  </div>
+
+  {% if clients %}
+    <ul class="list-group list-group-flush mt-4 w-50 mx-auto">
+      {% for c in clients %}
+        <li class="list-group-item">
+          <strong>{{ c.name }}</strong> — {{ c.email }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>
+{% endblock %}

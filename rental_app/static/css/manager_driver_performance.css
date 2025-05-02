@@ -1,0 +1,60 @@
+body {
+  background-color: #fff8e1;
+  font-family: 'Poppins', sans-serif;
+  padding-bottom: 2rem;
+}
+
+.driver-perf-card {
+  max-width: 720px;
+  margin-top: 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(3px);
+  overflow: hidden;
+}
+
+.driver-perf-card .card-header {
+  font-size: 1.5rem;
+  font-weight: 600;
+  background-color: #ffe082;
+  color: #333;
+  text-align: center;
+  padding: 1.2rem;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.driver-perf-card .list-group-item {
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  background-color: #fffefb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f3f3f3;
+  transition: background-color 0.2s ease;
+}
+
+.driver-perf-card .list-group-item:hover {
+  background-color: #fff3cd;
+}
+
+.driver-perf-card .list-group-item:last-child {
+  border-bottom: none;
+}
+
+.driver-perf-card .badge {
+  font-size: 0.95rem;
+  padding: 0.5em 1em;
+  background-color: #ffc107;
+  color: #333;
+  font-weight: 600;
+  border-radius: 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+.driver-perf-card .text-muted {
+  font-size: 0.95rem;
+  color: #777;
+}

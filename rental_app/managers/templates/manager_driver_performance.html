@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Driver Performance{% endblock %}
+
+{% block nav_items %}
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('managers.top_k_clients') }}">Top K Clients</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('managers.model_usage_stats') }}">Model Usage Stats</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('managers.driver_performance') }}">Driver Performance</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('managers.cross_city_clients') }}">Cross-City Clients</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('managers.dashboard') }}">Dashboard</a>
+</li>
+{% endblock %}
+
+{% block nav_profile %}
+<div class="dropdown">
+  <a class="btn btn-outline-light dropdown-toggle" href="#" role="button"
+     data-bs-toggle="dropdown" aria-expanded="false">
+    <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+         alt="Profile" width="30" height="30" class="rounded-circle">
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li>
+      <a class="dropdown-item" href="{{ url_for('home.homepage') }}">Logout</a>
+    </li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/manager_driver_performance.css') }}">
+
+<div class="container mt-4 mb-5">
+  <div class="card driver-perf-card mx-auto">
+    <div class="card-header text-center">
+      Driver Performance
+    </div>
+    <ul class="list-group list-group-flush">
+      {% for d in perf %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ d.name }}</strong>
+            <small class="text-muted">({{ d.rent_count }} rents)</small>
+          </div>
+          <span class="badge bg-warning text-dark rounded-pill">
+            {{ d.avg_rating }}★
+          </span>
+        </li>
+      {% else %}
+        <li class="list-group-item text-center text-muted">
+          No driver data.
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}
+
